@@ -1,0 +1,53 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1 Checkout repo
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2 Setup node
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with: 
+        node-vesion: 22.11
+    
+    # 3 Install dependencies, build react app
+
+    - name: Install dependencies and build
+      working-directory: ./
+      run: |
+        npm install
+        npm run build
+    
+    # 4 Copy server files and React build folder to deployment branch
+    - name: Deploy to deploy branch
+      run: |
+        mkdir deploy
+
+        cp -R server deploy/
+
+        cp -R build/* deploy/
+
+        cd deploy
+        git init
+        git config user.name "GitHub Actions"
+        git config user.email "deltagaming.ch.nik@gmail.com"
+
+        git add .
+        git commit -m "Deploy form GitHub Actions"
+        git branch -M deploy
+        git push -f https://<GITHUB_TOKEN>@github.com/ZNGR-DYNAMICS/BanhMiBros-React.git deploy
+      
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    
