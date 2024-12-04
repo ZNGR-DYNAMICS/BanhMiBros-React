@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import AddEntry from './pages/AddEntry';
 
 const App: React.FC = () => {
     const [data, setData] = useState<string>('');
 
     useEffect(() => {
-        fetch('/list_databases.php')
+        fetch('./databaseList.php')
             .then(response => response.text())
             .then(setData)
             .catch(err => console.error('Error fetching data:', err));
     }, []);
 
     return (
-        <div>
-            <h1>Database Info</h1>
-            <div dangerouslySetInnerHTML={{ __html: data }} />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/addentry" element={<AddEntry/>} />
+            </Routes>
+        </Router>
     );
 };
 
