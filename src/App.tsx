@@ -4,7 +4,7 @@ import Home from './components/Home';
 import AddEntry from './pages/AddEntry';
 
 const App: React.FC = () => {
-    const [data, setData] = useState<string>('');
+    const [,setData] = useState<string>('');
 
     useEffect(() => {
         fetch('./databaseList.php')

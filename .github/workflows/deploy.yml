@@ -24,6 +24,8 @@ jobs:
 
     - name: Install dependencies and build
       working-directory: ./
+      env:
+        CI: false
       run: |
         npm install
         npm run build
