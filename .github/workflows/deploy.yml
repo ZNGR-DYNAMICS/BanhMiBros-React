@@ -21,7 +21,6 @@ jobs:
         node-version: 22.11
     
     # 3 Install dependencies, build react app
-
     - name: Install dependencies and build
       working-directory: ./
       env:
@@ -32,6 +31,8 @@ jobs:
     
     # 4 Copy server files and React build folder to deployment branch
     - name: Deploy to deploy branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mkdir deploy
 
@@ -41,15 +42,12 @@ jobs:
 
         cd deploy
         git init
-        git config user.name "GitHub Actions"
+        git config user.name "n-zngr"
         git config user.email "deltagaming.ch.nik@gmail.com"
 
         git add .
-        git commit -m "Deploy form GitHub Actions"
+        git commit -m "Deploy from GitHub Actions"
         git branch -M deploy
-        git push -f https://<GITHUB_TOKEN>@github.com/ZNGR-DYNAMICS/BanhMiBros-React.git deploy
-      
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/ZNGR-DYNAMICS/BanhMiBros-React.git deploy
 
     
