@@ -31,6 +31,7 @@ const AddEntry: React.FC = () => {
     return (
         <div>
             <h1>Add a New Entry</h1>
+            <p>Test Hello :)</p>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">Username:</label>
                 <input
